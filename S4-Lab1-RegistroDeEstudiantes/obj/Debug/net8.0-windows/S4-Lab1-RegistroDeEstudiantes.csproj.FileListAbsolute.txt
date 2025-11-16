@@ -1,0 +1,17 @@
+C:\Users\alexi\Documents\PROY_C#\S4\S4-Lab1-RegistroDeEstudiantes\S4-Lab1-RegistroDeEstudiantes\bin\Debug\net8.0-windows\S4-Lab1-RegistroDeEstudiantes.exe
+C:\Users\alexi\Documents\PROY_C#\S4\S4-Lab1-RegistroDeEstudiantes\S4-Lab1-RegistroDeEstudiantes\bin\Debug\net8.0-windows\S4-Lab1-RegistroDeEstudiantes.deps.json
+C:\Users\alexi\Documents\PROY_C#\S4\S4-Lab1-RegistroDeEstudiantes\S4-Lab1-RegistroDeEstudiantes\bin\Debug\net8.0-windows\S4-Lab1-RegistroDeEstudiantes.runtimeconfig.json
+C:\Users\alexi\Documents\PROY_C#\S4\S4-Lab1-RegistroDeEstudiantes\S4-Lab1-RegistroDeEstudiantes\bin\Debug\net8.0-windows\S4-Lab1-RegistroDeEstudiantes.dll
+C:\Users\alexi\Documents\PROY_C#\S4\S4-Lab1-RegistroDeEstudiantes\S4-Lab1-RegistroDeEstudiantes\bin\Debug\net8.0-windows\S4-Lab1-RegistroDeEstudiantes.pdb
+C:\Users\alexi\Documents\PROY_C#\S4\S4-Lab1-RegistroDeEstudiantes\S4-Lab1-RegistroDeEstudiantes\obj\Debug\net8.0-windows\S4_Lab1_RegistroDeEstudiantes.Form1.resources
+C:\Users\alexi\Documents\PROY_C#\S4\S4-Lab1-RegistroDeEstudiantes\S4-Lab1-RegistroDeEstudiantes\obj\Debug\net8.0-windows\S4-Lab1-RegistroDeEstudiantes.csproj.GenerateResource.cache
+C:\Users\alexi\Documents\PROY_C#\S4\S4-Lab1-RegistroDeEstudiantes\S4-Lab1-RegistroDeEstudiantes\obj\Debug\net8.0-windows\S4-Lab1-RegistroDeEstudiantes.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\alexi\Documents\PROY_C#\S4\S4-Lab1-RegistroDeEstudiantes\S4-Lab1-RegistroDeEstudiantes\obj\Debug\net8.0-windows\S4-Lab1-RegistroDeEstudiantes.AssemblyInfoInputs.cache
+C:\Users\alexi\Documents\PROY_C#\S4\S4-Lab1-RegistroDeEstudiantes\S4-Lab1-RegistroDeEstudiantes\obj\Debug\net8.0-windows\S4-Lab1-RegistroDeEstudiantes.AssemblyInfo.cs
+C:\Users\alexi\Documents\PROY_C#\S4\S4-Lab1-RegistroDeEstudiantes\S4-Lab1-RegistroDeEstudiantes\obj\Debug\net8.0-windows\S4-Lab1-RegistroDeEstudiantes.csproj.CoreCompileInputs.cache
+C:\Users\alexi\Documents\PROY_C#\S4\S4-Lab1-RegistroDeEstudiantes\S4-Lab1-RegistroDeEstudiantes\obj\Debug\net8.0-windows\S4-Lab1-RegistroDeEstudiantes.sourcelink.json
+C:\Users\alexi\Documents\PROY_C#\S4\S4-Lab1-RegistroDeEstudiantes\S4-Lab1-RegistroDeEstudiantes\obj\Debug\net8.0-windows\S4-Lab1-RegistroDeEstudiantes.dll
+C:\Users\alexi\Documents\PROY_C#\S4\S4-Lab1-RegistroDeEstudiantes\S4-Lab1-RegistroDeEstudiantes\obj\Debug\net8.0-windows\refint\S4-Lab1-RegistroDeEstudiantes.dll
+C:\Users\alexi\Documents\PROY_C#\S4\S4-Lab1-RegistroDeEstudiantes\S4-Lab1-RegistroDeEstudiantes\obj\Debug\net8.0-windows\S4-Lab1-RegistroDeEstudiantes.pdb
+C:\Users\alexi\Documents\PROY_C#\S4\S4-Lab1-RegistroDeEstudiantes\S4-Lab1-RegistroDeEstudiantes\obj\Debug\net8.0-windows\S4-Lab1-RegistroDeEstudiantes.genruntimeconfig.cache
+C:\Users\alexi\Documents\PROY_C#\S4\S4-Lab1-RegistroDeEstudiantes\S4-Lab1-RegistroDeEstudiantes\obj\Debug\net8.0-windows\ref\S4-Lab1-RegistroDeEstudiantes.dll
