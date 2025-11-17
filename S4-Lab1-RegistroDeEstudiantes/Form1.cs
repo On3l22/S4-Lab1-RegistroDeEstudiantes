@@ -1,4 +1,4 @@
-using Microsoft.VisualBasic;
+Ôªøusing Microsoft.VisualBasic;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
@@ -11,7 +11,7 @@ namespace S4_Lab1_RegistroDeEstudiantes
         string valor;
         string codigo = "admin123";
 
-        //InicializaciÛn del formulario
+        //Inicializaci√≥n del formulario
         public Form1()
         {
             InitializeComponent();
@@ -21,17 +21,17 @@ namespace S4_Lab1_RegistroDeEstudiantes
         //Evento que se ejecuta al mostrar el formulario
         private void Form1_Shown(object sender, EventArgs e)
         {
-            valor = Interaction.InputBox("Ingrese el codigo de administrador:", "Inicio de sesiÛn");
+            valor = Interaction.InputBox("Ingrese el codigo de administrador:", "Inicio de sesi√≥n");
             if (valor != codigo)
             {
                 if (valor == "")
                 {
-                    MessageBox.Show("SesiÛn cancelada", "Cerrando programa",
+                    MessageBox.Show("Sesi√≥n cancelada", "Cerrando programa",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    //Interaction.MsgBox("Acceso Denegado. CÛdigo incorrecto.");
+                    //Interaction.MsgBox("Acceso Denegado. C√≥digo incorrecto.");
                     MessageBox.Show("Advertencia: La clave es incorrecta", "Acceso denegado",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
@@ -66,7 +66,58 @@ namespace S4_Lab1_RegistroDeEstudiantes
 
         private void verRegistroToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Verificar si el archivo existe
+            if (!File.Exists("Lista de estudiantes.json"))
+            {
+                MessageBox.Show("No hay registros guardados.", "Sin datos",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
+            // Leer el archivo JSON
+            string json = File.ReadAllText("Lista de estudiantes.json");
+
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                MessageBox.Show("El archivo de registros est√° vac√≠o.", "Sin datos",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // Convertir JSON a objeto
+            ListaDeEstudiantes data = JsonSerializer.Deserialize<ListaDeEstudiantes>(json);
+
+            if (data == null || data.estudiantes == null || data.estudiantes.Count == 0)
+            {
+                MessageBox.Show("No hay estudiantes guardados.", "Sin datos",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // Obtener el √∫ltimo estudiante registrado
+            Estudiante ultimo = data.estudiantes.Last();
+
+            // Cargar datos en los controles del formulario
+            tbxNombre.Text = ultimo.nombre;
+            tbxCedula.Text = ultimo.cedula;
+            tbxUsuario.Text = ultimo.usuario;
+            tbxPassword.Text = ultimo.password;
+            tbxConfirmacion.Text = ultimo.password;
+
+            cbxCarrera.SelectedItem = ultimo.carrera;
+            cbx_Semestre.SelectedItem = ultimo.semestre.ToString();
+
+            if (ultimo.jornada == "Matutina")
+                rbMatutina.Checked = true;
+            else
+                rbVespertina.Checked = true;
+
+            // Opcionales (si deseas marcar algo por defecto)
+            //chbx_Terminos.Checked = true;
+            //chbx_Notificaciones.Checked = true;
+
+            MessageBox.Show("Registro cargado correctamente.", "Informaci√≥n",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void SubMenu_nuevo_Click(object sender, EventArgs e)
@@ -99,26 +150,26 @@ namespace S4_Lab1_RegistroDeEstudiantes
                 cbx_Semestre.SelectedIndex == -1 ||
                 (rbMatutina.Checked == false && rbVespertina.Checked == false))
             {
-                MessageBox.Show("Uno de los campos est· vacÌo.", "Error",
+                MessageBox.Show("Uno de los campos est√° vac√≠o.", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            //  VALIDACI”N NOMBRE SIN SIMBOLOS
+            //  VALIDACI√ìN NOMBRE SIN SIMBOLOS
             foreach (char c in tbxNombre.Text)
             {
                 if (!char.IsLetter(c) && !char.IsWhiteSpace(c))
                 {
-                    MessageBox.Show("El nombre no puede contener sÌmbolos.", "Dato ilÛgico",
+                    MessageBox.Show("El nombre no puede contener s√≠mbolos.", "Dato il√≥gico",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
             }
-            //CANTIDAD M¡XIMA DE CARACTERES
+            //CANTIDAD M√ÅXIMA DE CARACTERES
             if (tbxNombre.Text.Length > 30)
             {
-                MessageBox.Show("El nombre excede el lÌmite permitido (30 caracteres).",
-                    "Dato ilÛgico", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("El nombre excede el l√≠mite permitido (30 caracteres).",
+                    "Dato il√≥gico", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             // VALIDACION DEL FORMATO DE LA CEDULA
@@ -126,26 +177,57 @@ namespace S4_Lab1_RegistroDeEstudiantes
 
             if (!Regex.IsMatch(tbxCedula.Text, patron))
             {
-                MessageBox.Show("La cÈdula debe contener n˙meros separados por guiones. Ejemplos v·lidos:\n2-755-39\n02-0755-000039",
-                    "Dato ilÛgico", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("La c√©dula debe contener n√∫meros separados por guiones. Ejemplos v√°lidos:\n2-755-39\n02-0755-000039",
+                    "Dato il√≥gico", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            //VALIDACI”N PASSWORD 
+            //VALIDACI√ìN PASSWORD 
             if (tbxPassword.Text != tbxConfirmacion.Text)
             {
-                MessageBox.Show("La contraseÒa y la confirmaciÛn no coinciden.",
+                MessageBox.Show("La contrase√±a y la confirmaci√≥n no coinciden.",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            
 
-            //CARGAR O CREAR LA LISTA
             ListaDeEstudiantes data;
 
             if (File.Exists("Lista de estudiantes.json"))
             {
-                string json = File.ReadAllText("Lista de estudiantes.json");
-                data = JsonSerializer.Deserialize<ListaDeEstudiantes>(json);
+                try
+                {
+                    string json = File.ReadAllText("Lista de estudiantes.json");
+
+                    if (string.IsNullOrWhiteSpace(json))
+                    {
+                        // Archivo vac√≠o ‚Üí crear lista nueva
+                        data = new ListaDeEstudiantes()
+                        {
+                            estudiantes = new List<Estudiante>()
+                        };
+                    }
+                    else
+                    {
+                        data = JsonSerializer.Deserialize<ListaDeEstudiantes>(json);
+
+                        if (data == null || data.estudiantes == null)
+                        {
+                            data = new ListaDeEstudiantes()
+                            {
+                                estudiantes = new List<Estudiante>()
+                            };
+                        }
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("El archivo JSON est√° da√±ado. Se crear√° uno nuevo.",
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    data = new ListaDeEstudiantes()
+                    {
+                        estudiantes = new List<Estudiante>()
+                    };
+                }
             }
             else
             {
@@ -154,6 +236,7 @@ namespace S4_Lab1_RegistroDeEstudiantes
                     estudiantes = new List<Estudiante>()
                 };
             }
+
 
             // CREAR EL NUEVO OBJETO
             Estudiante nuevo = new Estudiante()
@@ -178,7 +261,7 @@ namespace S4_Lab1_RegistroDeEstudiantes
             string nuevoJson = JsonSerializer.Serialize(data, opciones);
             File.WriteAllText("Lista de estudiantes.json", nuevoJson);
 
-            MessageBox.Show("Registro guardado correctamente.", "…xito",
+            MessageBox.Show("Registro guardado correctamente.", "√âxito",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
