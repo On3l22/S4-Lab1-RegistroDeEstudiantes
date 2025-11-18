@@ -58,14 +58,19 @@
             SubMenuAcerca = new ToolStripMenuItem();
             chbx_Terminos = new CheckBox();
             chbx_Notificaciones = new CheckBox();
+            groupBox3 = new GroupBox();
+            dataGridView1 = new DataGridView();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             menuStrip1.SuspendLayout();
+            groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // tbxCedula
             // 
             tbxCedula.Location = new Point(115, 106);
+            tbxCedula.MaxLength = 8;
             tbxCedula.Name = "tbxCedula";
             tbxCedula.Size = new Size(479, 31);
             tbxCedula.TabIndex = 0;
@@ -78,7 +83,6 @@
             lblNombre.Size = new Size(82, 25);
             lblNombre.TabIndex = 1;
             lblNombre.Text = "Nombre:";
-            lblNombre.Click += label1_Click;
             // 
             // groupBox1
             // 
@@ -102,6 +106,7 @@
             // 
             // cbx_Semestre
             // 
+            cbx_Semestre.DropDownStyle = ComboBoxStyle.DropDownList;
             cbx_Semestre.FormattingEnabled = true;
             cbx_Semestre.Location = new Point(115, 192);
             cbx_Semestre.Name = "cbx_Semestre";
@@ -110,6 +115,7 @@
             // 
             // cbxCarrera
             // 
+            cbxCarrera.DropDownStyle = ComboBoxStyle.DropDownList;
             cbxCarrera.FormattingEnabled = true;
             cbxCarrera.Location = new Point(115, 149);
             cbxCarrera.Name = "cbxCarrera";
@@ -141,6 +147,7 @@
             // tbxNombre
             // 
             tbxNombre.Location = new Point(115, 59);
+            tbxNombre.MaxLength = 30;
             tbxNombre.Name = "tbxNombre";
             tbxNombre.Size = new Size(479, 31);
             tbxNombre.TabIndex = 2;
@@ -240,6 +247,7 @@
             // tbxUsuario
             // 
             tbxUsuario.Location = new Point(162, 55);
+            tbxUsuario.MaxLength = 30;
             tbxUsuario.Name = "tbxUsuario";
             tbxUsuario.Size = new Size(299, 31);
             tbxUsuario.TabIndex = 0;
@@ -250,7 +258,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { Menu, MenuRegistros, MenuAyuda });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1204, 33);
+            menuStrip1.Size = new Size(1264, 33);
             menuStrip1.TabIndex = 4;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -258,27 +266,27 @@
             // 
             Menu.DropDownItems.AddRange(new ToolStripItem[] { SubMenu_nuevo, SubMenu_guardar, SubMenu_salir });
             Menu.Name = "Menu";
-            Menu.Size = new Size(133, 29);
-            Menu.Text = "MenuArchivo";
+            Menu.Size = new Size(88, 29);
+            Menu.Text = "Archivo";
             // 
             // SubMenu_nuevo
             // 
             SubMenu_nuevo.Name = "SubMenu_nuevo";
-            SubMenu_nuevo.Size = new Size(270, 34);
+            SubMenu_nuevo.Size = new Size(177, 34);
             SubMenu_nuevo.Text = "Nuevo";
             SubMenu_nuevo.Click += SubMenu_nuevo_Click;
             // 
             // SubMenu_guardar
             // 
             SubMenu_guardar.Name = "SubMenu_guardar";
-            SubMenu_guardar.Size = new Size(270, 34);
+            SubMenu_guardar.Size = new Size(177, 34);
             SubMenu_guardar.Text = "Guardar";
             SubMenu_guardar.Click += SubMenu_guardar_Click;
             // 
             // SubMenu_salir
             // 
             SubMenu_salir.Name = "SubMenu_salir";
-            SubMenu_salir.Size = new Size(270, 34);
+            SubMenu_salir.Size = new Size(177, 34);
             SubMenu_salir.Text = "Salir";
             SubMenu_salir.Click += SubMenu_salir_Click;
             // 
@@ -329,12 +337,32 @@
             chbx_Notificaciones.Text = "Recibir notificaciones";
             chbx_Notificaciones.UseVisualStyleBackColor = true;
             // 
+            // groupBox3
+            // 
+            groupBox3.Controls.Add(dataGridView1);
+            groupBox3.Location = new Point(35, 417);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Size = new Size(1138, 312);
+            groupBox3.TabIndex = 7;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "Tabla de Registros";
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(0, 30);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowHeadersWidth = 62;
+            dataGridView1.Size = new Size(1138, 282);
+            dataGridView1.TabIndex = 0;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(1204, 419);
+            ClientSize = new Size(1264, 762);
+            Controls.Add(groupBox3);
             Controls.Add(chbx_Notificaciones);
             Controls.Add(chbx_Terminos);
             Controls.Add(groupBox2);
@@ -351,6 +379,8 @@
             groupBox2.PerformLayout();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
+            groupBox3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -387,5 +417,7 @@
         private ToolStripMenuItem MenuRegistros;
         private ToolStripMenuItem SubMenuEstudiante;
         private ComboBox cbx_Semestre;
+        private GroupBox groupBox3;
+        private DataGridView dataGridView1;
     }
 }

@@ -1,7 +1,8 @@
 ﻿using Microsoft.VisualBasic;
+using Newtonsoft.Json;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace S4_Lab1_RegistroDeEstudiantes
 {
@@ -18,7 +19,7 @@ namespace S4_Lab1_RegistroDeEstudiantes
             cargarListas();
         }
 
-        //Evento que se ejecuta al mostrar el formulario
+        // ///// EVENTO AL MOSTRAR EL FORMULARIO ////////////////////////////////////////////////////
         private void Form1_Shown(object sender, EventArgs e)
         {
             valor = Interaction.InputBox("Ingrese el codigo de administrador:", "Inicio de sesión");
@@ -44,26 +45,40 @@ namespace S4_Lab1_RegistroDeEstudiantes
             }
         }
 
+        // ////// METODO PARA CARGAR LAS LISTAS DEL COMBOBOX /////////////////////////////////////
         private void cargarListas()
         {
             string json = File.ReadAllText("carrerasUniversitarias.json");
 
             Carreras data = JsonSerializer.Deserialize<Carreras>(json);
+            // Llenar el ComboBox con las carreras
             foreach (var carrera in data.carreras_unificadas)
             {
                 cbxCarrera.Items.Add(carrera);
             }
 
+            // Llenar el ComboBox con los semestres (1-11)
             for (int i = 0; i < 11; i++)
             {
                 cbx_Semestre.Items.Add((i + 1).ToString());
             }
+
+            cargarRegistros();
         }
-        private void label1_Click(object sender, EventArgs e)
+
+        private void cargarRegistros()
         {
+            // Leer archivo
+            string json = File.ReadAllText("Lista de estudiantes.json");
 
+            // Convertir JSON a objeto C#
+            ListaDeEstudiantes datos = JsonConvert.DeserializeObject<ListaDeEstudiantes>(json);
+
+            // Asignar la lista directamente al DataGridView
+            dataGridView1.DataSource = datos.estudiantes;
         }
 
+        // ///// VER UTLIMO REGISTRO GUARDADO ////////////////////////////////////////////////////
         private void verRegistroToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Verificar si el archivo existe
@@ -120,6 +135,7 @@ namespace S4_Lab1_RegistroDeEstudiantes
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        // ///// EVENTO DEL SUBMENU NUEVO ///////////////////////////////////////////////////////
         private void SubMenu_nuevo_Click(object sender, EventArgs e)
         {
             tbxCedula.Clear();
@@ -138,8 +154,11 @@ namespace S4_Lab1_RegistroDeEstudiantes
             chbx_Notificaciones.Checked = false;
         }
 
+        // ///// EVENTO DEL SUBMENU GUARDAR //////////////////////////////////////////////////////
         private void SubMenu_guardar_Click(object sender, EventArgs e)
         {
+
+
             // VALIDACION DE CAMPOS VACIO
             if (string.IsNullOrWhiteSpace(tbxNombre.Text) ||
                 string.IsNullOrWhiteSpace(tbxCedula.Text) ||
@@ -173,7 +192,8 @@ namespace S4_Lab1_RegistroDeEstudiantes
                 return;
             }
             // VALIDACION DEL FORMATO DE LA CEDULA
-            string patron = @"^\d+-\d+-\d+$";
+            string patron = @"^\d{1,2}-\d{1,4}-\d{1,6}$";
+
 
             if (!Regex.IsMatch(tbxCedula.Text, patron))
             {
@@ -252,7 +272,14 @@ namespace S4_Lab1_RegistroDeEstudiantes
 
             data.estudiantes.Add(nuevo);
 
-          //SE GUARDA EL ARCHIVO
+            if (!chbx_Terminos.Checked)
+            {
+                //VALIDA QUE SE ACEPTEN TÉRMINOS Y CONDICIONES
+                MessageBox.Show("Debes aceptar los términos y condiciones para continuar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            //SE GUARDA EL ARCHIVO
             var opciones = new JsonSerializerOptions
             {
                 WriteIndented = true
@@ -265,9 +292,13 @@ namespace S4_Lab1_RegistroDeEstudiantes
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+
+        // ///// EVENTO DEL SUBMENU SALIR /////////////////////////////////////////////////////////
         private void SubMenu_salir_Click(object sender, EventArgs e)
         {
             Close();
         }
+
+        
     }
 }
