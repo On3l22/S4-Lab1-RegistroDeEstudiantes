@@ -73,3 +73,7 @@ out/
 
 # Ignore user-specific configs
 *.vscode/
+
+.vs/
+bin/
+obj/
