@@ -44,6 +44,15 @@
       "jornada": "Matutina",
       "usuario": "dfdfd",
       "password": "dfdfd"
+    },
+    {
+      "nombre": "Oliver",
+      "cedula": "2-755-39",
+      "carrera": "Licenciatura en Ingenier\u00EDa Geol\u00F3gica",
+      "semestre": 2,
+      "jornada": "Matutina",
+      "usuario": "sdsd",
+      "password": "123321"
     }
   ]
 }

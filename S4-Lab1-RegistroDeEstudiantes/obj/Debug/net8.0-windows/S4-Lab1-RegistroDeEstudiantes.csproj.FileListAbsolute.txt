@@ -35,3 +35,6 @@ C:\Users\HP_15Tq\Documents\7d\Registro\S4-Lab1-RegistroDeEstudiantes\S4-Lab1-Reg
 C:\Users\alexi\Documents\PROY_C#\S4\S4-Lab1-RegistroDeEstudiantes\S4-Lab1-RegistroDeEstudiantes\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
 C:\Users\alexi\Documents\PROY_C#\S4\S4-Lab1-RegistroDeEstudiantes\S4-Lab1-RegistroDeEstudiantes\obj\Debug\net8.0-windows\S4-Lab1-RegistroDeEstudiantes.csproj.AssemblyReference.cache
 C:\Users\alexi\Documents\PROY_C#\S4\S4-Lab1-RegistroDeEstudiantes\S4-Lab1-RegistroDeEstudiantes\obj\Debug\net8.0-windows\S4-Lab1-.48C485F8.Up2Date
+C:\Users\HP_15Tq\Documents\7d\Registro\S4-Lab1-RegistroDeEstudiantes\S4-Lab1-RegistroDeEstudiantes\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
+C:\Users\HP_15Tq\Documents\7d\Registro\S4-Lab1-RegistroDeEstudiantes\S4-Lab1-RegistroDeEstudiantes\obj\Debug\net8.0-windows\S4-Lab1-RegistroDeEstudiantes.csproj.AssemblyReference.cache
+C:\Users\HP_15Tq\Documents\7d\Registro\S4-Lab1-RegistroDeEstudiantes\S4-Lab1-RegistroDeEstudiantes\obj\Debug\net8.0-windows\S4-Lab1-.48C485F8.Up2Date

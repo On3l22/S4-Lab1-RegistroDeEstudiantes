@@ -8,21 +8,42 @@ namespace S4_Lab1_RegistroDeEstudiantes
 {
     public partial class Form1 : Form
     {
-        //password hola
         string valor;
         string codigo = "admin123";
 
-        //Inicialización del formulario
         public Form1()
         {
             InitializeComponent();
             cargarListas();
+
+            // Activar salto con ENTER
+            this.KeyPreview = true;
+            this.KeyDown += Form1_KeyDown;
+
+            tbxNombre.KeyDown += SaltarConEnter;
+            tbxCedula.KeyDown += SaltarConEnter;
+            tbxUsuario.KeyDown += SaltarConEnter;
+            tbxPassword.KeyDown += SaltarConEnter;
+            tbxConfirmacion.KeyDown += SaltarConEnter;
+            cbxCarrera.KeyDown += SaltarConEnter;
+            cbx_Semestre.KeyDown += SaltarConEnter;
         }
 
-        // ///// EVENTO AL MOSTRAR EL FORMULARIO ////////////////////////////////////////////////////
+        // ===== FUNCION PARA ENTER =====
+        private void SaltarConEnter(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                this.SelectNextControl((Control)sender, true, true, true, true);
+            }
+        }
+
+        // ===== EVENTO AL MOSTRAR EL FORMULARIO =====
         private void Form1_Shown(object sender, EventArgs e)
         {
             valor = Interaction.InputBox("Ingrese el codigo de administrador:", "Inicio de sesión");
+
             if (valor != codigo)
             {
                 if (valor == "")
@@ -32,7 +53,6 @@ namespace S4_Lab1_RegistroDeEstudiantes
                 }
                 else
                 {
-                    //Interaction.MsgBox("Acceso Denegado. Código incorrecto.");
                     MessageBox.Show("Advertencia: La clave es incorrecta", "Acceso denegado",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
@@ -42,22 +62,23 @@ namespace S4_Lab1_RegistroDeEstudiantes
             {
                 Interaction.MsgBox("Acceso Permitido. Bienvenido al sistema de registro.",
                     MsgBoxStyle.OkOnly, "Registro correcto");
+
+                tbxNombre.Focus();
             }
         }
 
-        // ////// METODO PARA CARGAR LAS LISTAS DEL COMBOBOX /////////////////////////////////////
+        // ===== CARGAR LISTAS =====
         private void cargarListas()
         {
             string json = File.ReadAllText("carrerasUniversitarias.json");
 
             Carreras data = JsonSerializer.Deserialize<Carreras>(json);
-            // Llenar el ComboBox con las carreras
+
             foreach (var carrera in data.carreras_unificadas)
             {
                 cbxCarrera.Items.Add(carrera);
             }
 
-            // Llenar el ComboBox con los semestres (1-11)
             for (int i = 0; i < 11; i++)
             {
                 cbx_Semestre.Items.Add((i + 1).ToString());
@@ -68,20 +89,25 @@ namespace S4_Lab1_RegistroDeEstudiantes
 
         private void cargarRegistros()
         {
-            // Leer archivo
+            if (!File.Exists("Lista de estudiantes.json"))
+                return;
+
             string json = File.ReadAllText("Lista de estudiantes.json");
 
-            // Convertir JSON a objeto C#
             ListaDeEstudiantes datos = JsonConvert.DeserializeObject<ListaDeEstudiantes>(json);
 
-            // Asignar la lista directamente al DataGridView
             dataGridView1.DataSource = datos.estudiantes;
+
+            // Ocultar contraseña
+            if (dataGridView1.Columns["password"] != null)
+            {
+                dataGridView1.Columns["password"].Visible = false;
+            }
         }
 
-        // ///// VER UTLIMO REGISTRO GUARDADO ////////////////////////////////////////////////////
+        // ===== VER ÚLTIMO REGISTRO =====
         private void verRegistroToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Verificar si el archivo existe
             if (!File.Exists("Lista de estudiantes.json"))
             {
                 MessageBox.Show("No hay registros guardados.", "Sin datos",
@@ -89,7 +115,6 @@ namespace S4_Lab1_RegistroDeEstudiantes
                 return;
             }
 
-            // Leer el archivo JSON
             string json = File.ReadAllText("Lista de estudiantes.json");
 
             if (string.IsNullOrWhiteSpace(json))
@@ -99,7 +124,6 @@ namespace S4_Lab1_RegistroDeEstudiantes
                 return;
             }
 
-            // Convertir JSON a objeto
             ListaDeEstudiantes data = JsonSerializer.Deserialize<ListaDeEstudiantes>(json);
 
             if (data == null || data.estudiantes == null || data.estudiantes.Count == 0)
@@ -109,10 +133,8 @@ namespace S4_Lab1_RegistroDeEstudiantes
                 return;
             }
 
-            // Obtener el último estudiante registrado
             Estudiante ultimo = data.estudiantes.Last();
 
-            // Cargar datos en los controles del formulario
             tbxNombre.Text = ultimo.nombre;
             tbxCedula.Text = ultimo.cedula;
             tbxUsuario.Text = ultimo.usuario;
@@ -127,15 +149,11 @@ namespace S4_Lab1_RegistroDeEstudiantes
             else
                 rbVespertina.Checked = true;
 
-            // Opcionales (si deseas marcar algo por defecto)
-            //chbx_Terminos.Checked = true;
-            //chbx_Notificaciones.Checked = true;
-
             MessageBox.Show("Registro cargado correctamente.", "Información",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        // ///// EVENTO DEL SUBMENU NUEVO ///////////////////////////////////////////////////////
+        // ===== NUEVO =====
         private void SubMenu_nuevo_Click(object sender, EventArgs e)
         {
             tbxCedula.Clear();
@@ -152,14 +170,14 @@ namespace S4_Lab1_RegistroDeEstudiantes
 
             chbx_Terminos.Checked = false;
             chbx_Notificaciones.Checked = false;
+
+            tbxNombre.Focus();
         }
 
-        // ///// EVENTO DEL SUBMENU GUARDAR //////////////////////////////////////////////////////
+        // ===== GUARDAR =====
         private void SubMenu_guardar_Click(object sender, EventArgs e)
         {
-
-
-            // VALIDACION DE CAMPOS VACIO
+            // ----- VALIDACIONES -----
             if (string.IsNullOrWhiteSpace(tbxNombre.Text) ||
                 string.IsNullOrWhiteSpace(tbxCedula.Text) ||
                 string.IsNullOrWhiteSpace(tbxUsuario.Text) ||
@@ -167,14 +185,13 @@ namespace S4_Lab1_RegistroDeEstudiantes
                 string.IsNullOrWhiteSpace(tbxConfirmacion.Text) ||
                 cbxCarrera.SelectedIndex == -1 ||
                 cbx_Semestre.SelectedIndex == -1 ||
-                (rbMatutina.Checked == false && rbVespertina.Checked == false))
+                (!rbMatutina.Checked && !rbVespertina.Checked))
             {
                 MessageBox.Show("Uno de los campos está vacío.", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            //  VALIDACIÓN NOMBRE SIN SIMBOLOS
             foreach (char c in tbxNombre.Text)
             {
                 if (!char.IsLetter(c) && !char.IsWhiteSpace(c))
@@ -184,24 +201,23 @@ namespace S4_Lab1_RegistroDeEstudiantes
                     return;
                 }
             }
-            //CANTIDAD MÁXIMA DE CARACTERES
+
             if (tbxNombre.Text.Length > 30)
             {
                 MessageBox.Show("El nombre excede el límite permitido (30 caracteres).",
                     "Dato ilógico", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            // VALIDACION DEL FORMATO DE LA CEDULA
-            string patron = @"^\d{1,2}-\d{1,4}-\d{1,6}$";
 
+            string patron = @"^\d{1,2}-\d{1,4}-\d{1,6}$";
 
             if (!Regex.IsMatch(tbxCedula.Text, patron))
             {
-                MessageBox.Show("La cédula debe contener números separados por guiones. Ejemplos válidos:\n2-755-39\n02-0755-000039",
+                MessageBox.Show("La cédula debe tener formato válido como 2-755-39 o 02-0755-000039",
                     "Dato ilógico", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            //VALIDACIÓN PASSWORD 
+
             if (tbxPassword.Text != tbxConfirmacion.Text)
             {
                 MessageBox.Show("La contraseña y la confirmación no coinciden.",
@@ -219,46 +235,47 @@ namespace S4_Lab1_RegistroDeEstudiantes
 
                     if (string.IsNullOrWhiteSpace(json))
                     {
-                        // Archivo vacío → crear lista nueva
-                        data = new ListaDeEstudiantes()
-                        {
-                            estudiantes = new List<Estudiante>()
-                        };
+                        data = new ListaDeEstudiantes() { estudiantes = new List<Estudiante>() };
                     }
                     else
                     {
                         data = JsonSerializer.Deserialize<ListaDeEstudiantes>(json);
 
                         if (data == null || data.estudiantes == null)
-                        {
-                            data = new ListaDeEstudiantes()
-                            {
-                                estudiantes = new List<Estudiante>()
-                            };
-                        }
+                            data = new ListaDeEstudiantes() { estudiantes = new List<Estudiante>() };
                     }
                 }
                 catch
                 {
-                    MessageBox.Show("El archivo JSON está dañado. Se creará uno nuevo.",
+                    MessageBox.Show("Archivo dañado. Se creará uno nuevo.",
                         "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                    data = new ListaDeEstudiantes()
-                    {
-                        estudiantes = new List<Estudiante>()
-                    };
+                    data = new ListaDeEstudiantes() { estudiantes = new List<Estudiante>() };
                 }
             }
             else
             {
-                data = new ListaDeEstudiantes()
-                {
-                    estudiantes = new List<Estudiante>()
-                };
+                data = new ListaDeEstudiantes() { estudiantes = new List<Estudiante>() };
             }
 
+            // ----- VERIFICAR REPETIDOS -----
+            bool cedulaExiste = data.estudiantes.Any(e => e.cedula == tbxCedula.Text);
+            if (cedulaExiste)
+            {
+                MessageBox.Show("La cédula ya está registrada.", "Dato repetido",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-            // CREAR EL NUEVO OBJETO
+            bool usuarioExiste = data.estudiantes.Any(e => e.usuario == tbxUsuario.Text);
+            if (usuarioExiste)
+            {
+                MessageBox.Show("El usuario ya está registrado.", "Dato repetido",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // ----- CREAR OBJETO -----
             Estudiante nuevo = new Estudiante()
             {
                 nombre = tbxNombre.Text,
@@ -270,16 +287,15 @@ namespace S4_Lab1_RegistroDeEstudiantes
                 password = tbxPassword.Text
             };
 
-            data.estudiantes.Add(nuevo);
-
             if (!chbx_Terminos.Checked)
             {
-                //VALIDA QUE SE ACEPTEN TÉRMINOS Y CONDICIONES
-                MessageBox.Show("Debes aceptar los términos y condiciones para continuar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Debes aceptar los términos.", "Aviso",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            //SE GUARDA EL ARCHIVO
+            data.estudiantes.Add(nuevo);
+
             var opciones = new JsonSerializerOptions
             {
                 WriteIndented = true
@@ -290,15 +306,65 @@ namespace S4_Lab1_RegistroDeEstudiantes
 
             MessageBox.Show("Registro guardado correctamente.", "Éxito",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            cargarRegistros();
         }
 
-
-        // ///// EVENTO DEL SUBMENU SALIR /////////////////////////////////////////////////////////
+        // ===== SALIR =====
         private void SubMenu_salir_Click(object sender, EventArgs e)
         {
             Close();
         }
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            // ===== CTRL + S → Guardar =====
+            if (e.Control && e.KeyCode == Keys.S)
+            {
+                e.SuppressKeyPress = true;
 
-        
+                // Verificar campos obligatorios
+                if (!string.IsNullOrWhiteSpace(tbxNombre.Text) &&
+                    !string.IsNullOrWhiteSpace(tbxCedula.Text) &&
+                    !string.IsNullOrWhiteSpace(tbxUsuario.Text) &&
+                    !string.IsNullOrWhiteSpace(tbxPassword.Text) &&
+                    !string.IsNullOrWhiteSpace(tbxConfirmacion.Text) &&
+                    cbxCarrera.SelectedIndex != -1 &&
+                    cbx_Semestre.SelectedIndex != -1 &&
+                    (rbMatutina.Checked || rbVespertina.Checked))
+                {
+                    SubMenu_guardar_Click(sender, e);
+                }
+                else
+                {
+                    MessageBox.Show("Completa todos los campos obligatorios antes de guardar.",
+                        "Campos incompletos",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                }
+            }
+
+
+            if (e.Control && e.KeyCode == Keys.N)
+            {
+                e.SuppressKeyPress = true;
+                SubMenu_nuevo_Click(sender, e);
+            }
+
+
+            if (e.Control && e.KeyCode == Keys.L)
+            {
+                e.SuppressKeyPress = true;
+                verRegistroToolStripMenuItem_Click(sender, e);
+            }
+
+
+            if (e.Control && e.KeyCode == Keys.Q)
+            {
+                e.SuppressKeyPress = true;
+                this.Close();
+            }
+        }
+
     }
+
 }
