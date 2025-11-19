@@ -10,6 +10,7 @@ namespace S4_Lab1_RegistroDeEstudiantes
     {
         string valor;
         string codigo = "admin123";
+        bool esValidoCierre = false;
 
         public Form1()
         {
@@ -42,29 +43,35 @@ namespace S4_Lab1_RegistroDeEstudiantes
         // ===== EVENTO AL MOSTRAR EL FORMULARIO =====
         private void Form1_Shown(object sender, EventArgs e)
         {
-            valor = Interaction.InputBox("Ingrese el codigo de administrador:", "Inicio de sesión");
-
-            if (valor != codigo)
+            while (true)
             {
-                if (valor == "")
+                valor = Interaction.InputBox("Ingrese el codigo de administrador:", "Inicio de sesión");
+
+                if (valor != codigo)
                 {
-                    MessageBox.Show("Sesión cancelada", "Cerrando programa",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (valor == "")
+                    {
+                        MessageBox.Show("Sesión cancelada", "Cerrando programa",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Advertencia: La clave es incorrecta", "Acceso denegado",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Advertencia: La clave es incorrecta", "Acceso denegado",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                this.Close();
-            }
-            else
-            {
-                Interaction.MsgBox("Acceso Permitido. Bienvenido al sistema de registro.",
-                    MsgBoxStyle.OkOnly, "Registro correcto");
+                    Interaction.MsgBox("Acceso Permitido. Bienvenido al sistema de registro.",
+                        MsgBoxStyle.OkOnly, "Registro correcto");
 
-                tbxNombre.Focus();
+                    tbxNombre.Focus();
+                    break;
+                }
             }
+
+
         }
 
         // ===== CARGAR LISTAS =====
@@ -177,6 +184,9 @@ namespace S4_Lab1_RegistroDeEstudiantes
         // ===== GUARDAR =====
         private void SubMenu_guardar_Click(object sender, EventArgs e)
         {
+
+            tbxUsuario.Text = tbxNombre.Text + tbxCedula.Text.Replace("-", "");
+
             // ----- VALIDACIONES -----
             if (string.IsNullOrWhiteSpace(tbxNombre.Text) ||
                 string.IsNullOrWhiteSpace(tbxCedula.Text) ||
@@ -313,7 +323,14 @@ namespace S4_Lab1_RegistroDeEstudiantes
         // ===== SALIR =====
         private void SubMenu_salir_Click(object sender, EventArgs e)
         {
-            Close();
+            var salida = Interaction.MsgBox("¿Esta segura que quiere salir del programa?",
+                MsgBoxStyle.YesNo, "Cierre del programa");
+
+            if (salida == MsgBoxResult.Yes)
+            {
+                esValidoCierre = true;
+                this.Close();
+            }
         }
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
@@ -360,11 +377,69 @@ namespace S4_Lab1_RegistroDeEstudiantes
 
             if (e.Control && e.KeyCode == Keys.Q)
             {
-                e.SuppressKeyPress = true;
-                this.Close();
+                var salida = Interaction.MsgBox("¿Esta segura que quiere salir del programa?",
+                    MsgBoxStyle.YesNo, "Cierre del programa");
+
+                if (salida == MsgBoxResult.Yes)
+                {
+                    e.SuppressKeyPress = true;
+                    esValidoCierre = true;
+                    this.Close();
+                }
+
             }
         }
 
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!esValidoCierre)
+            {
+                var salida = Interaction.MsgBox("¿Esta segura que quiere salir del programa?",
+                MsgBoxStyle.YesNo, "Cierre del programa");
+
+                if (salida == MsgBoxResult.No)
+                {
+                    e.Cancel = true;
+                }
+            }
+        }
+
+        private void tbxCedula_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permitir solo números
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && e.KeyChar != '-')
+            {
+                e.Handled = true; // Bloquea la tecla
+            }
+        }
+
+        private void tbxConfirmacion_TextChanged(object sender, EventArgs e)
+        {
+            ActualizarNombreCompleto();
+        }
+
+        private void tbxCedula_TextChanged(object sender, EventArgs e)
+        {
+            ActualizarNombreCompleto();
+        }
+
+        private void ActualizarNombreCompleto()
+        {
+            if (!string.IsNullOrWhiteSpace(tbxNombre.Text) &&
+                !string.IsNullOrWhiteSpace(tbxCedula.Text))
+            {
+                tbxUsuario.Text = $"{tbxNombre.Text}{tbxCedula.Text.Replace("-", "")}";
+            }
+            else
+            {
+                tbxUsuario.Text = "";  // Solo se llena si ambos están completos
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 
 }

@@ -53,6 +53,24 @@
       "jornada": "Matutina",
       "usuario": "sdsd",
       "password": "123321"
+    },
+    {
+      "nombre": "Jose Abrego",
+      "cedula": "2-333-33",
+      "carrera": "Licenciatura en Ingenier\u00EDa Geol\u00F3gica",
+      "semestre": 10,
+      "jornada": "Matutina",
+      "usuario": "Abrego123",
+      "password": "123"
+    },
+    {
+      "nombre": "Onel",
+      "cedula": "2-753-2255",
+      "carrera": "Licenciatura en Log\u00EDstica y Transporte Multimodal",
+      "semestre": 11,
+      "jornada": "Vespertina",
+      "usuario": "Onel27532255",
+      "password": "111"
     }
   ]
 }

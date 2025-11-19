@@ -56,6 +56,8 @@
             SubMenuEstudiante = new ToolStripMenuItem();
             MenuAyuda = new ToolStripMenuItem();
             SubMenuAcerca = new ToolStripMenuItem();
+            autoresOnelMOliverGToolStripMenuItem = new ToolStripMenuItem();
+            version11aToolStripMenuItem = new ToolStripMenuItem();
             chbx_Terminos = new CheckBox();
             chbx_Notificaciones = new CheckBox();
             groupBox3 = new GroupBox();
@@ -70,10 +72,12 @@
             // tbxCedula
             // 
             tbxCedula.Location = new Point(115, 106);
-            tbxCedula.MaxLength = 8;
+            tbxCedula.MaxLength = 11;
             tbxCedula.Name = "tbxCedula";
             tbxCedula.Size = new Size(479, 31);
             tbxCedula.TabIndex = 0;
+            tbxCedula.TextChanged += tbxCedula_TextChanged;
+            tbxCedula.KeyPress += tbxCedula_KeyPress;
             // 
             // lblNombre
             // 
@@ -234,13 +238,16 @@
             // 
             tbxConfirmacion.Location = new Point(162, 133);
             tbxConfirmacion.Name = "tbxConfirmacion";
+            tbxConfirmacion.PasswordChar = '*';
             tbxConfirmacion.Size = new Size(299, 31);
             tbxConfirmacion.TabIndex = 2;
+            tbxConfirmacion.TextChanged += tbxConfirmacion_TextChanged;
             // 
             // tbxPassword
             // 
             tbxPassword.Location = new Point(162, 96);
             tbxPassword.Name = "tbxPassword";
+            tbxPassword.PasswordChar = '*';
             tbxPassword.Size = new Size(299, 31);
             tbxPassword.TabIndex = 1;
             // 
@@ -249,6 +256,7 @@
             tbxUsuario.Location = new Point(162, 55);
             tbxUsuario.MaxLength = 30;
             tbxUsuario.Name = "tbxUsuario";
+            tbxUsuario.ReadOnly = true;
             tbxUsuario.Size = new Size(299, 31);
             tbxUsuario.TabIndex = 0;
             // 
@@ -272,22 +280,22 @@
             // SubMenu_nuevo
             // 
             SubMenu_nuevo.Name = "SubMenu_nuevo";
-            SubMenu_nuevo.Size = new Size(177, 34);
-            SubMenu_nuevo.Text = "Nuevo";
+            SubMenu_nuevo.Size = new Size(310, 34);
+            SubMenu_nuevo.Text = "Nuevo                Ctrl + N";
             SubMenu_nuevo.Click += SubMenu_nuevo_Click;
             // 
             // SubMenu_guardar
             // 
             SubMenu_guardar.Name = "SubMenu_guardar";
-            SubMenu_guardar.Size = new Size(177, 34);
-            SubMenu_guardar.Text = "Guardar";
+            SubMenu_guardar.Size = new Size(310, 34);
+            SubMenu_guardar.Text = "Guardar              Ctrl + S";
             SubMenu_guardar.Click += SubMenu_guardar_Click;
             // 
             // SubMenu_salir
             // 
             SubMenu_salir.Name = "SubMenu_salir";
-            SubMenu_salir.Size = new Size(177, 34);
-            SubMenu_salir.Text = "Salir";
+            SubMenu_salir.Size = new Size(310, 34);
+            SubMenu_salir.Text = "Salir                    Ctrl + Q";
             SubMenu_salir.Click += SubMenu_salir_Click;
             // 
             // MenuRegistros
@@ -313,9 +321,22 @@
             // 
             // SubMenuAcerca
             // 
+            SubMenuAcerca.DropDownItems.AddRange(new ToolStripItem[] { autoresOnelMOliverGToolStripMenuItem, version11aToolStripMenuItem });
             SubMenuAcerca.Name = "SubMenuAcerca";
             SubMenuAcerca.Size = new Size(203, 34);
             SubMenuAcerca.Text = "Acerca de...";
+            // 
+            // autoresOnelMOliverGToolStripMenuItem
+            // 
+            autoresOnelMOliverGToolStripMenuItem.Name = "autoresOnelMOliverGToolStripMenuItem";
+            autoresOnelMOliverGToolStripMenuItem.Size = new Size(338, 34);
+            autoresOnelMOliverGToolStripMenuItem.Text = "Autores: Onel M. && Oliver G.";
+            // 
+            // version11aToolStripMenuItem
+            // 
+            version11aToolStripMenuItem.Name = "version11aToolStripMenuItem";
+            version11aToolStripMenuItem.Size = new Size(338, 34);
+            version11aToolStripMenuItem.Text = "Version 1.1a";
             // 
             // chbx_Terminos
             // 
@@ -349,9 +370,10 @@
             // 
             // dataGridView1
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.ColumnHeadersHeight = 34;
             dataGridView1.Location = new Point(0, 30);
             dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersWidth = 62;
             dataGridView1.Size = new Size(1138, 282);
             dataGridView1.TabIndex = 0;
@@ -372,6 +394,8 @@
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Formulario Principal";
+            FormClosing += Form1_FormClosing;
+            Load += Form1_Load;
             Shown += Form1_Shown;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
@@ -419,5 +443,7 @@
         private ComboBox cbx_Semestre;
         private GroupBox groupBox3;
         private DataGridView dataGridView1;
+        private ToolStripMenuItem autoresOnelMOliverGToolStripMenuItem;
+        private ToolStripMenuItem version11aToolStripMenuItem;
     }
 }
