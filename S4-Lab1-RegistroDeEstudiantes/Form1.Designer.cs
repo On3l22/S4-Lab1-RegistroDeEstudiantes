@@ -246,6 +246,7 @@
             // tbxPassword
             // 
             tbxPassword.Location = new Point(162, 96);
+            tbxPassword.MaxLength = 12;
             tbxPassword.Name = "tbxPassword";
             tbxPassword.PasswordChar = '*';
             tbxPassword.Size = new Size(299, 31);
@@ -395,7 +396,6 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Formulario Principal";
             FormClosing += Form1_FormClosing;
-            Load += Form1_Load;
             Shown += Form1_Shown;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();

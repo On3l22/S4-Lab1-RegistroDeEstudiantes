@@ -1,24 +1,6 @@
 {
   "estudiantes": [
     {
-      "nombre": "sasa",
-      "cedula": "2-222-22",
-      "carrera": "Licenciatura en Ingenier\u00EDa de Sistemas y Computaci\u00F3n",
-      "semestre": 2,
-      "jornada": "Matutina",
-      "usuario": "wqw",
-      "password": "123"
-    },
-    {
-      "nombre": "sasa",
-      "cedula": "2-222-2222",
-      "carrera": "Licenciatura en Ingenier\u00EDa de Sistemas de Informaci\u00F3n",
-      "semestre": 3,
-      "jornada": "Matutina",
-      "usuario": "ssa",
-      "password": "123"
-    },
-    {
       "nombre": "Onel",
       "cedula": "2-753-2252",
       "carrera": "Licenciatura en Ingenier\u00EDa Geol\u00F3gica",
@@ -28,49 +10,49 @@
       "password": "dfdfdd"
     },
     {
-      "nombre": "Onel",
-      "cedula": "2-753-22522222222222222222222222222222222222222222",
-      "carrera": "Licenciatura en Ingenier\u00EDa Mar\u00EDtima y Portuaria",
-      "semestre": 6,
-      "jornada": "Vespertina",
-      "usuario": "ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
-      "password": "dddddddddddddddddddddddd"
+      "nombre": "Luis Gaintan",
+      "cedula": "2-555-44443",
+      "carrera": "Licenciatura en Ingenier\u00EDa El\u00E9ctrica y Electr\u00F3nica",
+      "semestre": 3,
+      "jornada": "Matutina",
+      "usuario": "Luis_Gaintan255544443",
+      "password": "12345"
     },
     {
-      "nombre": "dfdfd",
-      "cedula": "2-753-225",
-      "carrera": "Licenciatura en Ingenier\u00EDa Mar\u00EDtima y Portuaria",
-      "semestre": 4,
+      "nombre": "Jojan Soto",
+      "cedula": "4-4444-4444",
+      "carrera": "Licenciatura en Ingenier\u00EDa Civil",
+      "semestre": 10,
       "jornada": "Matutina",
-      "usuario": "dfdfd",
-      "password": "dfdfd"
-    },
-    {
-      "nombre": "Oliver",
-      "cedula": "2-755-39",
-      "carrera": "Licenciatura en Ingenier\u00EDa Geol\u00F3gica",
-      "semestre": 2,
-      "jornada": "Matutina",
-      "usuario": "sdsd",
-      "password": "123321"
+      "usuario": "Jojan_Soto444444444",
+      "password": "12345"
     },
     {
       "nombre": "Jose Abrego",
-      "cedula": "2-333-33",
-      "carrera": "Licenciatura en Ingenier\u00EDa Geol\u00F3gica",
-      "semestre": 10,
+      "cedula": "5-4432-3333",
+      "carrera": "Licenciatura en Ingenier\u00EDa Naval",
+      "semestre": 2,
       "jornada": "Matutina",
-      "usuario": "Abrego123",
-      "password": "123"
+      "usuario": "Jose_Abrego544323333",
+      "password": "12345"
     },
     {
-      "nombre": "Onel",
-      "cedula": "2-753-2255",
-      "carrera": "Licenciatura en Log\u00EDstica y Transporte Multimodal",
-      "semestre": 11,
+      "nombre": "Maria Gordon",
+      "cedula": "5-4443-2222",
+      "carrera": "Licenciatura en Ingenier\u00EDa El\u00E9ctrica y Electr\u00F3nica",
+      "semestre": 4,
       "jornada": "Vespertina",
-      "usuario": "Onel27532255",
-      "password": "111"
+      "usuario": "Maria_Gordon544432222",
+      "password": "1234"
+    },
+    {
+      "nombre": "Oliver Gonzales",
+      "cedula": "1-222-33334",
+      "carrera": "Licenciatura en Ingenier\u00EDa Ambiental",
+      "semestre": 3,
+      "jornada": "Matutina",
+      "usuario": "Oliver_Gonzales122233334",
+      "password": "123"
     }
   ]
 }

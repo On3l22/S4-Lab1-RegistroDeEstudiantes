@@ -12,6 +12,7 @@ namespace S4_Lab1_RegistroDeEstudiantes
         string codigo = "admin123";
         bool esValidoCierre = false;
 
+        //################ CONSTRUCTOR ################
         public Form1()
         {
             InitializeComponent();
@@ -28,9 +29,11 @@ namespace S4_Lab1_RegistroDeEstudiantes
             tbxConfirmacion.KeyDown += SaltarConEnter;
             cbxCarrera.KeyDown += SaltarConEnter;
             cbx_Semestre.KeyDown += SaltarConEnter;
-        }
+        }//################ FIN CONSTRUCTOR ################
 
-        // ===== FUNCION PARA ENTER =====
+        // -- EVENTO PARA ENTER --------------------------------
+        // Permite saltar al siguiente control al presionar ENTER
+        // ------------------------------------------------------
         private void SaltarConEnter(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -40,20 +43,22 @@ namespace S4_Lab1_RegistroDeEstudiantes
             }
         }
 
-        // ===== EVENTO AL MOSTRAR EL FORMULARIO =====
+        // -- EVENTO AL MOSTRAR EL FORMULARIO -----------------------------------------
+        // Hecho para solicitar un codigo de administrador antes de permitir el acceso
+        //-----------------------------------------------------------------------------
         private void Form1_Shown(object sender, EventArgs e)
         {
-            while (true)
+            while (true)//Contrla el bucle hasta que se ingrese el codigo correcto o se cancele
             {
                 valor = Interaction.InputBox("Ingrese el codigo de administrador:", "Inicio de sesión");
 
-                if (valor != codigo)
+                if (valor != codigo)//si el codigo es incorrecto
                 {
-                    if (valor == "")
+                    if (valor == "")//si selecciona "Cancelar"
                     {
                         MessageBox.Show("Sesión cancelada", "Cerrando programa",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        this.Close();
+                        this.Close();//sale del programa
                     }
                     else
                     {
@@ -61,49 +66,49 @@ namespace S4_Lab1_RegistroDeEstudiantes
                             MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
-                else
+                else// si el codigo es correcto
                 {
                     Interaction.MsgBox("Acceso Permitido. Bienvenido al sistema de registro.",
                         MsgBoxStyle.OkOnly, "Registro correcto");
 
                     tbxNombre.Focus();
-                    break;
+                    break;//sale del buble
                 }
             }
-
-
         }
 
-        // ===== CARGAR LISTAS =====
+        //----------------------
+        // METODO CARGAR LISTAS
+        //----------------------
         private void cargarListas()
         {
-            string json = File.ReadAllText("carrerasUniversitarias.json");
+            string json = File.ReadAllText("carrerasUniversitarias.json"); // Lee el archivo JSON
+            Carreras data = JsonSerializer.Deserialize<Carreras>(json);// Deserializa el contenido JSON a un objeto Carreras
 
-            Carreras data = JsonSerializer.Deserialize<Carreras>(json);
-
-            foreach (var carrera in data.carreras_unificadas)
+            foreach (var carrera in data.carreras_unificadas)// Agrega cada carrera al ComboBox
             {
                 cbxCarrera.Items.Add(carrera);
             }
 
-            for (int i = 0; i < 11; i++)
+            for (int i = 0; i < 11; i++)// Agrega los semestres al ComboBox
             {
                 cbx_Semestre.Items.Add((i + 1).ToString());
             }
 
-            cargarRegistros();
+            cargarRegistros();//Carga los registros guardados en el DataGridView
         }
 
+        //-------------------------
+        // METODO CARGAR REGISTROS
+        //-------------------------
         private void cargarRegistros()
         {
             if (!File.Exists("Lista de estudiantes.json"))
-                return;
+                return; // Si el archivo no existe, sale del método
+            string json = File.ReadAllText("Lista de estudiantes.json");// Lee el contenido del archivo JSON
+            ListaDeEstudiantes datos = JsonConvert.DeserializeObject<ListaDeEstudiantes>(json);// Deserializa el contenido JSON a un objeto ListaDeEstudiantes
 
-            string json = File.ReadAllText("Lista de estudiantes.json");
-
-            ListaDeEstudiantes datos = JsonConvert.DeserializeObject<ListaDeEstudiantes>(json);
-
-            dataGridView1.DataSource = datos.estudiantes;
+            dataGridView1.DataSource = datos.estudiantes;// Asigna la lista de estudiantes como fuente de datos del DataGridView
 
             // Ocultar contraseña
             if (dataGridView1.Columns["password"] != null)
@@ -112,27 +117,27 @@ namespace S4_Lab1_RegistroDeEstudiantes
             }
         }
 
-        // ===== VER ÚLTIMO REGISTRO =====
+        //---------------------
+        // VER ÚLTIMO REGISTRO 
+        //---------------------
         private void verRegistroToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!File.Exists("Lista de estudiantes.json"))
+            if (!File.Exists("Lista de estudiantes.json"))// Verifica si el archivo existe
             {
                 MessageBox.Show("No hay registros guardados.", "Sin datos",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            string json = File.ReadAllText("Lista de estudiantes.json");
-
-            if (string.IsNullOrWhiteSpace(json))
+            string json = File.ReadAllText("Lista de estudiantes.json");// Lee el contenido del archivo JSON
+            if (string.IsNullOrWhiteSpace(json))// Verifica si el contenido está vacío
             {
                 MessageBox.Show("El archivo de registros está vacío.", "Sin datos",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            ListaDeEstudiantes data = JsonSerializer.Deserialize<ListaDeEstudiantes>(json);
-
+            ListaDeEstudiantes data = JsonSerializer.Deserialize<ListaDeEstudiantes>(json);// Deserializa el contenido JSON a un objeto ListaDeEstudiantes
             if (data == null || data.estudiantes == null || data.estudiantes.Count == 0)
             {
                 MessageBox.Show("No hay estudiantes guardados.", "Sin datos",
@@ -140,8 +145,9 @@ namespace S4_Lab1_RegistroDeEstudiantes
                 return;
             }
 
-            Estudiante ultimo = data.estudiantes.Last();
+            Estudiante ultimo = data.estudiantes.Last();// Obtiene el último estudiante registrado
 
+            // Rellena los campos del formulario con los datos del último estudiante
             tbxNombre.Text = ultimo.nombre;
             tbxCedula.Text = ultimo.cedula;
             tbxUsuario.Text = ultimo.usuario;
@@ -160,7 +166,9 @@ namespace S4_Lab1_RegistroDeEstudiantes
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        // ===== NUEVO =====
+        //-- EVENTO DE MENU [NUEVO REGISTRO] -------------------------
+        // Limpia todos los campos para un nuevo registro
+        //------------------------------------------------------------
         private void SubMenu_nuevo_Click(object sender, EventArgs e)
         {
             tbxCedula.Clear();
@@ -181,13 +189,15 @@ namespace S4_Lab1_RegistroDeEstudiantes
             tbxNombre.Focus();
         }
 
-        // ===== GUARDAR =====
+        //-- EVENTO DE MENU [GUARDAR] --------------------------------
+        // Valida y guarda el registro en un archivo JSON
+        //------------------------------------------------------------
         private void SubMenu_guardar_Click(object sender, EventArgs e)
         {
+            // Guarda el nombre de usuario generado automáticamente
+            tbxUsuario.Text = tbxNombre.Text.Replace(" ","_") + tbxCedula.Text.Replace("-", "");
 
-            tbxUsuario.Text = tbxNombre.Text + tbxCedula.Text.Replace("-", "");
-
-            // ----- VALIDACIONES -----
+            // ----- Validaciones de las entradas -----------
             if (string.IsNullOrWhiteSpace(tbxNombre.Text) ||
                 string.IsNullOrWhiteSpace(tbxCedula.Text) ||
                 string.IsNullOrWhiteSpace(tbxUsuario.Text) ||
@@ -197,97 +207,98 @@ namespace S4_Lab1_RegistroDeEstudiantes
                 cbx_Semestre.SelectedIndex == -1 ||
                 (!rbMatutina.Checked && !rbVespertina.Checked))
             {
-                MessageBox.Show("Uno de los campos está vacío.", "Error",
+                MessageBox.Show("Uno de los campos está vacío.", "Error",//Muestra un mensaje de error
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
+            // ----- Validar que el nombre no contenga símbolos -----
             foreach (char c in tbxNombre.Text)
             {
-                if (!char.IsLetter(c) && !char.IsWhiteSpace(c))
+                if (!char.IsLetter(c) && !char.IsWhiteSpace(c))// Verifica si el carácter no es una letra ni un espacio
                 {
                     MessageBox.Show("El nombre no puede contener símbolos.", "Dato ilógico",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);//Muestra un mensaje de advertencia
                     return;
                 }
             }
-
+            // ----- Validar longitud del nombre --------------------
             if (tbxNombre.Text.Length > 30)
             {
                 MessageBox.Show("El nombre excede el límite permitido (30 caracteres).",
                     "Dato ilógico", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
+            // ----- Validar formato de cédula ----------------------
             string patron = @"^\d{1,2}-\d{1,4}-\d{1,6}$";
-
             if (!Regex.IsMatch(tbxCedula.Text, patron))
             {
                 MessageBox.Show("La cédula debe tener formato válido como 2-755-39 o 02-0755-000039",
                     "Dato ilógico", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
+            // ----- Validar coincidencia de contraseñas -----------
             if (tbxPassword.Text != tbxConfirmacion.Text)
             {
                 MessageBox.Show("La contraseña y la confirmación no coinciden.",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
-            ListaDeEstudiantes data;
-
-            if (File.Exists("Lista de estudiantes.json"))
+            // ### CARGAR LISTA DE ESTUDIANTES ###
+            ListaDeEstudiantes data;// Declarar la variable data
+            if (File.Exists("Lista de estudiantes.json"))// Verifica si el archivo existe
             {
                 try
                 {
-                    string json = File.ReadAllText("Lista de estudiantes.json");
+                    string json = File.ReadAllText("Lista de estudiantes.json");//Leer el Json
 
-                    if (string.IsNullOrWhiteSpace(json))
+                    if (string.IsNullOrWhiteSpace(json))// Verifica si el contenido está vacío
                     {
-                        data = new ListaDeEstudiantes() { estudiantes = new List<Estudiante>() };
+                        data = new ListaDeEstudiantes() { estudiantes = new List<Estudiante>() };//Si esta vacio crea una nueva
                     }
                     else
                     {
-                        data = JsonSerializer.Deserialize<ListaDeEstudiantes>(json);
+                        data = JsonSerializer.Deserialize<ListaDeEstudiantes>(json);//sino deserializa el json
 
-                        if (data == null || data.estudiantes == null)
-                            data = new ListaDeEstudiantes() { estudiantes = new List<Estudiante>() };
+                        if (data == null || data.estudiantes == null)// Verifica si la deserialización fue exitosa
+                            data = new ListaDeEstudiantes() { estudiantes = new List<Estudiante>() };//Si no crea una nueva
                     }
                 }
-                catch
+                catch// Captura errores de deserialización
                 {
                     MessageBox.Show("Archivo dañado. Se creará uno nuevo.",
                         "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                    data = new ListaDeEstudiantes() { estudiantes = new List<Estudiante>() };
+                    data = new ListaDeEstudiantes() { estudiantes = new List<Estudiante>() };//Crea una nueva
                 }
             }
-            else
+            else// Si el archivo no existe, crea una nueva lista
             {
                 data = new ListaDeEstudiantes() { estudiantes = new List<Estudiante>() };
             }
 
-            // ----- VERIFICAR REPETIDOS -----
+            // ----- VERIFICA CEDULA EXISTENTE -----
             bool cedulaExiste = data.estudiantes.Any(e => e.cedula == tbxCedula.Text);
             if (cedulaExiste)
             {
                 MessageBox.Show("La cédula ya está registrada.", "Dato repetido",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);//Muestra un mensaje de advertencia
                 return;
             }
 
+            // ----- VERIFICA USUARIO EXISTENTE -----
             bool usuarioExiste = data.estudiantes.Any(e => e.usuario == tbxUsuario.Text);
             if (usuarioExiste)
             {
                 MessageBox.Show("El usuario ya está registrado.", "Dato repetido",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);//Muestra un mensaje de advertencia
                 return;
             }
 
-            // ----- CREAR OBJETO -----
-            Estudiante nuevo = new Estudiante()
+            //############# AGREGAR NUEVO ESTUDIANTE #############
+            Estudiante nuevo = new Estudiante()//crea una nueva instancia de estudiante
             {
+                //llena los campos con los datos del formulario
                 nombre = tbxNombre.Text,
                 cedula = tbxCedula.Text,
                 carrera = cbxCarrera.SelectedItem.ToString(),
@@ -297,30 +308,31 @@ namespace S4_Lab1_RegistroDeEstudiantes
                 password = tbxPassword.Text
             };
 
-            if (!chbx_Terminos.Checked)
+            if (!chbx_Terminos.Checked)//Verifica si se aceptaron los términos
             {
                 MessageBox.Show("Debes aceptar los términos.", "Aviso",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);//muestra un mensaje de advertencia
                 return;
             }
 
-            data.estudiantes.Add(nuevo);
-
-            var opciones = new JsonSerializerOptions
+            data.estudiantes.Add(nuevo);//agrega el nuevo estudiante a la lista
+            var opciones = new JsonSerializerOptions// Configura las opciones de serialización JSON
             {
                 WriteIndented = true
             };
 
-            string nuevoJson = JsonSerializer.Serialize(data, opciones);
-            File.WriteAllText("Lista de estudiantes.json", nuevoJson);
+            string nuevoJson = JsonSerializer.Serialize(data, opciones);// Serializa la lista actualizada a JSON
+            File.WriteAllText("Lista de estudiantes.json", nuevoJson);// Escribe el JSON en el archivo
 
             MessageBox.Show("Registro guardado correctamente.", "Éxito",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBoxButtons.OK, MessageBoxIcon.Information);// Muestra un mensaje de éxito
 
-            cargarRegistros();
+            cargarRegistros();// Recarga los registros en el DataGridView
         }
 
-        // ===== SALIR =====
+        //-- EVENTO DE MENU [SALIR] ----------------------------------
+        // Permite salir del programa con confirmacion
+        //------------------------------------------------------------
         private void SubMenu_salir_Click(object sender, EventArgs e)
         {
             var salida = Interaction.MsgBox("¿Esta segura que quiere salir del programa?",
@@ -332,6 +344,8 @@ namespace S4_Lab1_RegistroDeEstudiantes
                 this.Close();
             }
         }
+
+        /////////////////////////// ATAJO DE TECLADO ///////////////////////////
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             // ===== CTRL + S → Guardar =====
@@ -360,21 +374,21 @@ namespace S4_Lab1_RegistroDeEstudiantes
                 }
             }
 
-
+            // ===== CTRL + N → Nuevo Registro =====
             if (e.Control && e.KeyCode == Keys.N)
             {
                 e.SuppressKeyPress = true;
                 SubMenu_nuevo_Click(sender, e);
             }
 
-
+            // ===== CTRL + L → Ver Último Registro =====
             if (e.Control && e.KeyCode == Keys.L)
             {
                 e.SuppressKeyPress = true;
                 verRegistroToolStripMenuItem_Click(sender, e);
             }
 
-
+            // ===== CTRL + Q → Salir =====
             if (e.Control && e.KeyCode == Keys.Q)
             {
                 var salida = Interaction.MsgBox("¿Esta segura que quiere salir del programa?",
@@ -390,9 +404,11 @@ namespace S4_Lab1_RegistroDeEstudiantes
             }
         }
 
+        ////////////////////////// EVENTO FORM CLOSING ////////////////////////
+        // Permite confirmar el cierre del formulario al darle click en la X
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!esValidoCierre)
+            if (!esValidoCierre)//soluciona error al cerrar el programa 
             {
                 var salida = Interaction.MsgBox("¿Esta segura que quiere salir del programa?",
                 MsgBoxStyle.YesNo, "Cierre del programa");
@@ -404,6 +420,8 @@ namespace S4_Lab1_RegistroDeEstudiantes
             }
         }
 
+        //////////////////////// EVENTOS TBX CEDULA Y CONFIRMACION ////////////////////////
+        /// Permite solo la entrada de números en el textbox de cédula
         private void tbxCedula_KeyPress(object sender, KeyPressEventArgs e)
         {
             // Permitir solo números
@@ -413,33 +431,29 @@ namespace S4_Lab1_RegistroDeEstudiantes
             }
         }
 
+        ////// Actualiza el nombre de usuario automáticamente al cambiar nombre o cédula
+        /// dentro del campo de usuario //////
         private void tbxConfirmacion_TextChanged(object sender, EventArgs e)
         {
-            ActualizarNombreCompleto();
+            ActualizarNombreCompleto();// Llama al método para actualizar el nombre de usuario
         }
 
         private void tbxCedula_TextChanged(object sender, EventArgs e)
         {
-            ActualizarNombreCompleto();
+            ActualizarNombreCompleto();// Llama al método para actualizar el nombre de usuario
         }
 
         private void ActualizarNombreCompleto()
         {
             if (!string.IsNullOrWhiteSpace(tbxNombre.Text) &&
-                !string.IsNullOrWhiteSpace(tbxCedula.Text))
+                !string.IsNullOrWhiteSpace(tbxCedula.Text))// Verifica que ambos campos no estén vacíos
             {
-                tbxUsuario.Text = $"{tbxNombre.Text}{tbxCedula.Text.Replace("-", "")}";
+                tbxUsuario.Text = $"{tbxNombre.Text.Replace(" ", "_")}{tbxCedula.Text.Replace("-", "")}";// Genera el nombre de usuario
             }
             else
             {
                 tbxUsuario.Text = "";  // Solo se llena si ambos están completos
             }
         }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
     }
-
 }
